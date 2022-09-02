@@ -42,15 +42,14 @@ const showCatagory = show =>{
           <div class="d-flex">
           <img style="height:40px; width:40px" class=" m-3 img-fluid rounded-circle" src="${show.author.img}">
           <div>
-          <span class="d-block mt-2" >${show.author.name}</span> 
-          <span class="d-block">${show.author.published_date}</span>
+          <span class="d-block mt-2" >${show.author ?show.author.name :"No name" }</span> 
+          <span class="d-block">${show.author ? show.author.published_date :"no date"}</span>
+          </div >
+            <div class="mt-3 ms-5">
+            <p><i class="fa-sharp fa-solid fa-eye"></i><span>${show.total_view ? show.total_view :"no view" }</span></p>
+            </div>
+           <button onclick="dataDetailsid('${show._id}')" class="btn btn-primary h-25 ms-5 mt-3"  data-bs-toggle="modal" data-bs-target="#modalId">Show Details</button>
           </div>
-          
-          </div>
-          
-      
-         
-        
         </div>
       </div>
     </div>
@@ -60,5 +59,30 @@ const showCatagory = show =>{
     cardId.appendChild(createCard)
 
 }
+
+const dataDetailsid = newId =>{
+    fetch(`https://openapi.programming-hero.com/api/news/${newId ? newId :"No Url"}`)
+    .then(res => res.json())
+    .then(data =>modalDetails(data.data[0]))
+    .catch(error =>console.log(error))
+
+}
+ 
+const modalDetails = modal =>{
+   console.log(modal);
+   const modalIdTitle = document.getElementById('modalIdTitle');
+   modalIdTitle.innerText =modal.title;
+   const modalBody = document.getElementById('modal-body')
+   modalBody.innerHTML=`
+    <img class="img-fluid" src="${modal.image_url ? modal.image_url : " No image"}">  
+    <p>${modal.author.name ? modal.author.name : "No Name"}</p>
+    <p class="text-truncate">${modal.details}</p>
+    <img  src="${modal.thumbnail_url}">
+    <p>Thank you</p>
+   `;
+}
+
+
+
 
 allNews()
