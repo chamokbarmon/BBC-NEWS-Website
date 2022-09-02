@@ -38,7 +38,7 @@ const showCatagory = show =>{
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title">${show.title}</h5>
-          <p class="card-text">${show.details.slice(0,200)}</p>
+          <p class="card-text text-truncate" >${show.details.slice(0,500)}</p>
           <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
       </div>
