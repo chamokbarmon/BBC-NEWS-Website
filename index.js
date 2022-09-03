@@ -1,9 +1,14 @@
-const allNews = () =>{
-    fetch(`https://openapi.programming-hero.com/api/news/categories`)
-    .then(res => res.json())
-    .then(data => CatagoryList(data.data.news_category))
-    .catch(error =>console.log(error))
- 
+
+const allNews =async() =>{
+    const url = (`https://openapi.programming-hero.com/api/news/categories`)
+    try{
+      const res =await fetch (url)
+      const data = await res.json()
+      CatagoryList(data.data.news_category)
+     }
+     catch(error){
+      console.log(error);
+     }   
 }
 const CatagoryList = all =>{
    console.log(all)
@@ -50,7 +55,7 @@ const showCatagory = show =>{
     <div class="card mb-3" style="max-width:100%;">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="${show.image_url}" class="img-fluid h-100 rounded-start" alt="...">
+        <img src="${show.thumbnail_url}" class="img-fluid h-100 rounded-start" alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
