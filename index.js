@@ -6,15 +6,17 @@ const allNews = () =>{
  
 }
 const CatagoryList = all =>{
-
-  console.log(all)
-  const catagoryName = document.getElementById('catagory-Name');
- 
+   console.log(all)
+   const catagoryName = document.getElementById('catagory-Name');
+   const itemNumber =document.getElementById('itemNumber');
+    const number = document.createElement('div')
+    number.innerHTML=`
+    <p class="text-primary fw-bold p-3">${all.length} items found for category Entertainment</p>
+    `;
+  
   all.forEach(name => {
-       const itemNumber =document.getElementById('itemNumber');
-       itemNumber.innerHTML=`
-       <p class="text-primary fw-bold p-3">${name} items found for category Entertainment</p>
-       `
+    
+    itemNumber.appendChild(number)
        const createCatagory = document.createElement('div')
        createCatagory.classList.add('col')
        
