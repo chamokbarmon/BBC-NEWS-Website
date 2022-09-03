@@ -6,25 +6,40 @@ const allNews = () =>{
  
 }
 const CatagoryList = all =>{
-    console.log(all)
-    const catagoryName = document.getElementById('catagory-Name');
-    all.forEach(name => {
-         const createCatagory = document.createElement('div')
-         createCatagory.classList.add('col')
-         createCatagory.innerHTML=`
-         <a onclick="catagoryBtn('${name.category_id}')" class="w-100 fw-bold  text-decoration-none">${name.category_name}</a>
-         `;
-         catagoryName.appendChild(createCatagory)
-    });
-    
+
+  console.log(all)
+  const catagoryName = document.getElementById('catagory-Name');
+ 
+  all.forEach(name => {
+       const itemNumber =document.getElementById('itemNumber');
+       itemNumber.innerHTML=`
+       <p class="text-primary fw-bold p-3">${name} items found for category Entertainment</p>
+       `
+       const createCatagory = document.createElement('div')
+       createCatagory.classList.add('col')
+       
+       createCatagory.innerHTML=`
+       
+       <a onclick="catagoryBtn('${name.category_id}')" class="w-100 fw-bold  text-decoration-none">${name.category_name}</a>
+      
+       `;
+       catagoryName.appendChild(createCatagory)
+      
+  });
+  
 }
+
 const catagoryBtn = id =>{
   fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
   .then(res => res.json())
   .then(call =>showCatagory(call.data[0]))
+  toggleloder(true)
+  
 
 }
+
 const showCatagory = show =>{
+
     console.log(show)
     const cardId = document.getElementById('cardIdCatagory');
     const createCard = document.createElement('card')
@@ -57,9 +72,21 @@ const showCatagory = show =>{
     
     `;
     cardId.appendChild(createCard)
+    toggleloder(false)
 
 }
 
+
+const toggleloder = loading =>{
+   const loderId = document.getElementById('loderId');
+   if(loading){
+    loderId.classList.remove('d-none');
+   }
+   else{
+    loderId.classList.add('d-none')
+   }
+
+}
 const dataDetailsid = newId =>{
     fetch(`https://openapi.programming-hero.com/api/news/${newId ? newId :"No Url"}`)
     .then(res => res.json())
