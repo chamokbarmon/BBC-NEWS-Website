@@ -51,7 +51,7 @@ const showCatagory = show =>{
   console.log(show)
 
   const fountText = document.getElementById('itemNumber')
-  fountText.innerText =show.length;
+  fountText.innerText =show.length ?show.length : "no " ;
 
  
 
@@ -71,13 +71,13 @@ const showCatagory = show =>{
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">${cards.title}</h5>
+          <h5 class="card-title">${cards.title ? cards.title : "no title"}</h5>
           <p class="card-text text-truncate" >${cards.details.slice(0,500)}</p>
           <div class="d-flex">
           <img style="height:40px; width:40px" class=" m-3 img-fluid rounded-circle" src="${cards.author.img}">
           <div>
-          <span class="d-block mt-2" >${cards.author ?cards.author.name :"No name" }</span> 
-          <span class="d-block">${cards.author ? cards.author.published_date :"no date"}</span>
+          <span class="d-block mt-2" >${cards.author.name ?cards.author.name :"No name" }</span> 
+          <span class="d-block">${cards.author.published_date ? cards.author.published_date :"no date"}</span>
           </div >
             <div class="mt-3 ms-5">
             <p><i class="fa-sharp fa-solid fa-eye"></i><span>${cards.total_view ? cards.total_view :"no view" }</span></p>
