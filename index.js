@@ -12,16 +12,11 @@ const allNews =async() =>{
 }
 const CatagoryList = all =>{
    console.log(all)
+   
    const catagoryName = document.getElementById('catagory-Name');
-   const itemNumber =document.getElementById('itemNumber');
-    const number = document.createElement('div')
-    number.innerHTML=`
-    <p class="text-primary fw-bold p-3">${all.length} items found for category Entertainment</p>
-    `;
-  
-  all.forEach(name => {
+   all.forEach(name => {
     
-    itemNumber.appendChild(number)
+
        const createCatagory = document.createElement('div')
        createCatagory.classList.add('col')
        
@@ -36,41 +31,55 @@ const CatagoryList = all =>{
   
 }
 
-const catagoryBtn = id =>{
-  fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
-  .then(res => res.json())
-  .then(call =>showCatagory(call.data[0]))
-  toggleloder(true)
-  
+const catagoryBtn =async id =>{
+  const url=(`https://openapi.programming-hero.com/api/news/category/${id}`)
+  try{
+    const res =await fetch (url)
+    const data = await res.json()
+    showCatagory(data.data)
+   }
+   catch(error){
+    console.log(error);
+   } 
 
 }
 
 const showCatagory = show =>{
+  console.log(show)
 
-    console.log(show)
-    const cardId = document.getElementById('cardIdCatagory');
+  const fountText = document.getElementById('itemNumber')
+  fountText.innerText =show.length;
+
+ 
+
+  
+  const cardId = document.getElementById('cardIdCatagory');
+  cardId.innerText ="";
+
+  show.forEach(cards => {
+    console.log(cards)
     const createCard = document.createElement('card')
-    createCard.classList.add('col')
+ 
     createCard.innerHTML=`
     <div class="card mb-3" style="max-width:100%;">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="${show.thumbnail_url}" class="img-fluid h-100 rounded-start" alt="...">
+        <img src="${cards.thumbnail_url}" class="img-fluid h-100 rounded-start" alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">${show.title}</h5>
-          <p class="card-text text-truncate" >${show.details.slice(0,500)}</p>
+          <h5 class="card-title">${cards.title}</h5>
+          <p class="card-text text-truncate" >${cards.details.slice(0,500)}</p>
           <div class="d-flex">
-          <img style="height:40px; width:40px" class=" m-3 img-fluid rounded-circle" src="${show.author.img}">
+          <img style="height:40px; width:40px" class=" m-3 img-fluid rounded-circle" src="${cards.author.img}">
           <div>
-          <span class="d-block mt-2" >${show.author ?show.author.name :"No name" }</span> 
-          <span class="d-block">${show.author ? show.author.published_date :"no date"}</span>
+          <span class="d-block mt-2" >${cards.author ?cards.author.name :"No name" }</span> 
+          <span class="d-block">${cards.author ? cards.author.published_date :"no date"}</span>
           </div >
             <div class="mt-3 ms-5">
-            <p><i class="fa-sharp fa-solid fa-eye"></i><span>${show.total_view ? show.total_view :"no view" }</span></p>
+            <p><i class="fa-sharp fa-solid fa-eye"></i><span>${cards.total_view ? cards.total_view :"no view" }</span></p>
             </div>
-           <button onclick="dataDetailsid('${show._id}')" class="btn btn-primary h-25 ms-5 mt-3"  data-bs-toggle="modal" data-bs-target="#modalId">Show Details</button>
+           <button onclick="dataDetailsid('${cards._id}')" class="btn btn-primary h-25 ms-5 mt-3"  data-bs-toggle="modal" data-bs-target="#modalId">Show Details</button>
           </div>
         </div>
       </div>
@@ -81,8 +90,10 @@ const showCatagory = show =>{
     cardId.appendChild(createCard)
     toggleloder(false)
 
-}
 
+  });
+  
+}
 
 const toggleloder = loading =>{
    const loderId = document.getElementById('loderId');
@@ -95,7 +106,7 @@ const toggleloder = loading =>{
 
 }
 const dataDetailsid = newId =>{
-    fetch(`https://openapi.programming-hero.com/api/news/${newId ? newId :"No Url"}`)
+    fetch(`https://openapi.programming-hero.com/api/news/${newId}`)
     .then(res => res.json())
     .then(data =>modalDetails(data.data[0]))
     .catch(error =>console.log(error))
