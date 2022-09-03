@@ -11,6 +11,7 @@ const allNews =async() =>{
      }   
 }
 const CatagoryList = all =>{
+
    console.log(all)
    
    const catagoryName = document.getElementById('catagory-Name');
@@ -26,12 +27,13 @@ const CatagoryList = all =>{
       
        `;
        catagoryName.appendChild(createCatagory)
-      
+       
   });
   
 }
 
 const catagoryBtn =async id =>{
+  toggleloder(true)
   const url=(`https://openapi.programming-hero.com/api/news/category/${id}`)
   try{
     const res =await fetch (url)
@@ -41,6 +43,7 @@ const catagoryBtn =async id =>{
    catch(error){
     console.log(error);
    } 
+   
 
 }
 
@@ -64,7 +67,7 @@ const showCatagory = show =>{
     <div class="card mb-3" style="max-width:100%;">
     <div class="row g-0">
       <div class="col-md-4">
-        <img src="${cards.thumbnail_url}" class="img-fluid h-100 rounded-start" alt="...">
+        <img src="${cards.thumbnail_url ? cards.thumbnail_url : "no image"}" class="img-fluid h-100 rounded-start" alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -110,7 +113,7 @@ const dataDetailsid = newId =>{
     .then(res => res.json())
     .then(data =>modalDetails(data.data[0]))
     .catch(error =>console.log(error))
-
+    
 }
  
 const modalDetails = modal =>{
@@ -128,6 +131,6 @@ const modalDetails = modal =>{
 }
 
 
-
+catagoryBtn('1')
 
 allNews()
